@@ -1,11 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
+import { BadRequestError, validateRequest } from '@actickets/common';
 import jwt from 'jsonwebtoken';
 import { body } from 'express-validator';
 
 import { User } from '../models/user';
 import { Password } from './../utils/password';
-import { BadRequestError } from './../errors/bad-request-error';
-import { validateRequest } from './../middlewares/validate-request';
 
 const validationObj = [
   body('email').isEmail().withMessage('Email must be valid'),
