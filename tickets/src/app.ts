@@ -2,10 +2,9 @@ import express from 'express';
 import cookieSession from 'cookie-session';
 import 'express-async-errors';
 import { json } from 'body-parser';
-import { NotFoundError, errorHandler } from '@actickets/common';
+import { NotFoundError, errorHandler, currentUser } from '@actickets/common';
 
-;
-
+import { createTicketRouter } from './routes/new-ticket';
 
 const app = express();
 app.set('trust proxy', true);
@@ -16,7 +15,9 @@ app.use(cookieSession({
   secure: process.env.NODE_ENV !== 'test'
 }))
 
+app.use(currentUser)
 
+app.use(createTicketRouter)
 
 app.all('*', async () => {
   throw new NotFoundError();
